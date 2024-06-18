@@ -8,10 +8,24 @@ import ManageData from './components/ManageData';
 import ShowUserName from './components/ShowUserName';
 import CarDetails from './components/CarDetails';
 import Fragment from './components/Fragment';
+import Container from './components/Container';
+import ExecuteFunction from './components/ExecuteFunction';
+import Message from './components/Message';
+import ChangeMessageState from './components/ChangeMessageState';
 
 function App() {
   const name = "Matheus";
   const [userName] = useState(name);
+
+  function showMessage() {
+    console.log("Father component event");
+  }
+
+  const [message, setMessage] = useState("");
+
+  const handleMessage = (msg) => {
+    setMessage(msg)
+  }
 
   const cars = [
     {id: 1, brand: "Ford", km: 0, color: "red", newCar: true},
@@ -70,6 +84,7 @@ function App() {
       <div>
         {cars.map(car => (
           <CarDetails
+            key={car.id}
             brand={car.brand}
             km={car.km}
             color={car.color}
@@ -81,6 +96,29 @@ function App() {
       {/* Fragment */}
       <div>
         <Fragment propFragment="test" />
+      </div>
+
+      {/* Prop Children */}
+      <div>
+        <Container MyValue="test">
+          <p>This is the Children</p>
+        </Container>
+      </div>
+      <div>
+        <Container MyValue="tested">
+          <h5>This is the Children</h5>
+        </Container>
+      </div>
+
+      {/* Execute function with props */}
+      <div>
+        <ExecuteFunction myFunction={showMessage}/>
+      </div>
+
+      {/* State lift */}
+      <div>
+        <Message msg={message} />
+        <ChangeMessageState handleMessage={handleMessage} />
       </div>
     </div>
   );
