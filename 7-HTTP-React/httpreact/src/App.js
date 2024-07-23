@@ -23,7 +23,7 @@ function App() {
   // }, []);
 
   //custom hook
-  const {data: items} = useFetch(url);
+  const {data: items, httpConfig, loading} = useFetch(url);
 
 
   //adding products
@@ -35,31 +35,41 @@ function App() {
       price
     };
 
-    const res = await fetch(url,
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(product)
-      }
-    );
+    // const res = await fetch(url,
+    //   {
+    //     method: 'POST',
+    //     headers: {
+    //       'Content-Type': 'application/json'
+    //     },
+    //     body: JSON.stringify(product)
+    //   }
+    // );
 
-    // Dynamic loading
-    const addedProduct = await res.json();
+    // // Dynamic loading
+    // const addedProduct = await res.json();
 
-    setProducts((prevProducts) => [...prevProducts, addedProduct])
+    // setProducts((prevProducts) => [...prevProducts, addedProduct])
+
+    //Refactoring
+    httpConfig(product, "POST");
+
+    setName("");
+    setPrice("");
 
   };
 
   return (
     <div className="App">
       <h1>Products List</h1>
-      <ul>
-        {items && items.map(product => (
-          <li key={product.id}>{product.name} - ${product.price}</li>
-        ))} 
-      </ul>
+      {/* Loading data*/}
+      {loading && <p>Loading data...</p>}
+      {!loading && 
+        <ul>
+          {items && items.map(product => (
+            <li key={product.id}>{product.name} - ${product.price}</li>
+          ))} 
+        </ul>
+      }
       <div className="add-product">
         <form onSubmit={handleSubmit}>
           <label>
