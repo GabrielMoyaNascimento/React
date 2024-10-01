@@ -23,7 +23,7 @@ function App() {
   // }, []);
 
   //custom hook
-  const {data: items, httpConfig, loading} = useFetch(url);
+  const {data: items, httpConfig, loading, error} = useFetch(url);
 
 
   //adding products
@@ -63,6 +63,8 @@ function App() {
       <h1>Products List</h1>
       {/* Loading data*/}
       {loading && <p>Loading data...</p>}
+      {/* Error handling */}
+      {error && <p>{error}</p>}
       {!loading && 
         <ul>
           {items && items.map(product => (
@@ -80,7 +82,10 @@ function App() {
             Price:
             <input type="number" value={price} name="price" onChange={(e) => setPrice(e.target.value)} />
           </label>
-          <button type="submit">Add Product</button>
+          {/* state loading on POST */}
+          {loading && <input type="submit" disabled value="Loading"/>}
+          {!loading && <input type="submit" value="Create"/>}
+          {/* <button type="submit">Add Product</button> */}
         </form>
       </div>
     </div>

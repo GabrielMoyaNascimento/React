@@ -54,6 +54,11 @@
       "id": "f53b",
       "name": "Blue Shirt",
       "price": "10.99"
+    },
+    {
+      "id": "6526",
+      "name": "White SHirt",
+      "price": "10"
     }
   ]
 }
